@@ -1,0 +1,15 @@
+# Node
+node_modules/
+.env
+*.log
+
+# Electron
+dist/
+
+# React
+renderer/out/
+renderer/.next/
+.cache/
+
+# Editor
+.vscode
