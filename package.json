@@ -1,6 +1,6 @@
 {
-  "name": "electron-next-skeleton",
-  "productName": "ElectronNext",
+  "name": "subtrader-desktop",
+  "productName": "SubTrader",
   "version": "1.0.0",
   "main": "main/index.js",
   "scripts": {
