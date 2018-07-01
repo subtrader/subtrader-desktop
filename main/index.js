@@ -6,7 +6,16 @@ const { format } = require('url')
 const { BrowserWindow, app, ipcMain } = require('electron')
 const isDev = require('electron-is-dev')
 const prepareNext = require('electron-next')
+require('dotenv').config()
 
+//utils
+const {
+  getCoinPrice,
+  getCoinPriceSocket,
+  getCoinPricePromise,
+} = require('./utils/exchange-api/binance/priceChecker')
+
+var mainWindow = null
 // Prepare the renderer once the app is ready
 app.on('ready', async () => {
   await prepareNext('./renderer')
@@ -31,10 +40,13 @@ app.on('ready', async () => {
   mainWindow.loadURL(url)
 })
 
-// Quit the app once all windows are closed
 app.on('window-all-closed', app.quit)
 
-// listen the channel `message` and resend the received message to the renderer process
-ipcMain.on('message', (event, message) => {
-  event.sender.send('message', message)
+ipcMain.on('price', async (event, price) => {
+  const h = await getCoinPricePromise()
+  console.log({ h })
+  event.sender.send('price-reply', h)
+  // getCoinPriceSocket(res => {
+  //   event.sender.send('price-reply', res)
+  // })
 })
